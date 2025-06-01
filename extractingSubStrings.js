@@ -7,7 +7,7 @@ const findNumStars = (s, startIndexes, endIndexes) => {
         let end = endIndexes[idx];
         let matchRegex = /(?<=\|)\*+(?=\|)/g;
         let matches =  s.substring(start-1,end).match(matchRegex);
-        return (matches === null)?(0):matches.reduce((a,b) => (a+b)).length;
+        return (matches === null)?(0):matches.join('').length;
     })
 }
 
