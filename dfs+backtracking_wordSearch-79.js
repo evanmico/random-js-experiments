@@ -11,7 +11,6 @@ var exist = (board, word) => {
     //   r or c outside board bounds, wordIdx > word.length-1, curr cell is visited, curr cell not next in word, if curr cell not in word, mark visited and return
     // 1. marks letters not in the word as visited
     //
-    found = false;
     const rows = board.length;
     const columns = board[0].length;
 
@@ -22,46 +21,40 @@ var exist = (board, word) => {
             console.log(`r: ${r}\tc: ${c}\tboardVal: ${board[r][c]}`);
         }
         */
+        if (wordIdx === word.length) {
+            // success case since if it made it 1 over length of word, then it must have found everything including the lengh of word
+            return true;
+        }
         if (
             r < 0 ||
             c < 0 ||
             r >= rows ||
             c >= columns ||
-            board[r][c] === "#"
+            board[r][c] !== word[wordIdx]
         ) {
-            return;
+            return false;
         } // early return
 
-        if (board[r][c] === word[wordIdx] && wordIdx < word.length - 1) {
-            const val = board[r][c];
-            board[r][c] = "#";
-            recursiveSearch(r + 1, c, wordIdx + 1);
-            recursiveSearch(r - 1, c, wordIdx + 1);
-            recursiveSearch(r, c + 1, wordIdx + 1);
+        const val = board[r][c];
+        board[r][c] = "#";
+        const found = // this is short circuiting since if any one of these returns true before the others, it doesn't call the others
+            recursiveSearch(r + 1, c, wordIdx + 1) ||
+            recursiveSearch(r - 1, c, wordIdx + 1) ||
+            recursiveSearch(r, c + 1, wordIdx + 1) ||
             recursiveSearch(r, c - 1, wordIdx + 1);
-            board[r][c] = val;
-        } else if (board[r][c] === word[wordIdx]) {
-            /*
-            console.log(
-                `currLetter: ${word[wordIdx]}\twordIdx: ${wordIdx}\tboard[${r}][${c}]: ${board[r][c]}`
-            );
-            */
-            found = true;
-            return;
-        } else {
-            return;
-        }
+        board[r][c] = val;
+        return found;
     };
 
-    for (let i = 0; i < board.length && !found; i++) {
-        for (let j = 0; j < board[0].length && !found; j++) {
-            if (board[i][j] === word[0]) {
-                recursiveSearch(i, j, 0);
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+            if (board[i][j] === word[0] && recursiveSearch(i, j, 0)) {
+                return true;
             }
         }
     }
 
-    return found;
+    return false;
 };
 
 const board = [
@@ -77,4 +70,4 @@ const board2 = [
 ];
 const word2 = "ABCB";
 
-console.log(exist(board, word));
+console.log(exist(board2, word2));
