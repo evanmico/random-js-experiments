@@ -1,23 +1,26 @@
 {
-  "name": "jsexperiments",
-  "version": "1.0.0",
-  "description": "random-code-experiments",
-  "homepage": "https://github.com/evanmico/random-js-experiments#readme",
-  "bugs": {
-    "url": "https://github.com/evanmico/random-js-experiments/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/evanmico/random-js-experiments.git"
-  },
-  "license": "ISC",
-  "author": "evanmico",
-  "type": "commonjs",
-  "main": "arrayTransform.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.3.11"
-  }
+    "name": "jsexperiments",
+    "version": "1.0.0",
+    "description": "random-code-experiments",
+    "homepage": "https://github.com/evanmico/random-js-experiments#readme",
+    "bugs": {
+        "url": "https://github.com/evanmico/random-js-experiments/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/evanmico/random-js-experiments.git"
+    },
+    "license": "ISC",
+    "author": "evanmico",
+    "type": "module",
+    "main": "arrayTransform.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.3.11"
+    },
+    "dependencies": {
+        "jsdom": "^27.4.0"
+    }
 }
