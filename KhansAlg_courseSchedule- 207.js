@@ -3,7 +3,7 @@
  * @param {number[][]} prerequisites
  * @return {boolean}
  */
-var canFinish = (numCourses, prerequisites) => {
+var canFinishOG = (numCourses, prerequisites) => {
     // first build dependency map?
     // map has values from 0 to numCourses - 1
     const depMap = new Map();
@@ -65,6 +65,53 @@ var canFinish = (numCourses, prerequisites) => {
         return false;
     }
 };
+/**
+ * @param {number} numCourses
+ * @param {number[][]} prerequisites
+ * @return {boolean}
+ */
+var canFinish = (numCourses, prerequisites) => {
+    //const adjList = new Array(numCourses).fill([]); // DO NOT use cause then every element in the array refers to the exact same [] object
+    const adjList = Array.from({ length: numCourses }, () => []); // use cause each element has its own array object
+    const in_degreeArr = new Int32Array(numCourses);
+    // fill adjList and in_degreeArr
+    for (const [node, prereq] of prerequisites) {
+        adjList[prereq].push(node);
+        in_degreeArr[node] = in_degreeArr[node] + 1;
+    }
+    // create nodeQueue and fill with starting values that have an in_degree of 0
+    const nodeQueue = [];
+    for (let i = 0; i < in_degreeArr.length; i++) {
+        if (in_degreeArr[i] === 0) {
+            nodeQueue.push(i);
+        }
+    }
+
+    if (nodeQueue.length < 1) {
+        return false;
+    }
+
+    let head = 0; // to avoid shifting the node queue each time
+    let classCount = 0;
+    while (head < nodeQueue.length) {
+        classCount++;
+        const currNode = nodeQueue[head];
+        for (let i = 0; i < adjList[currNode].length; i++) {
+            const checkNode = adjList[currNode][i];
+            in_degreeArr[checkNode] = in_degreeArr[checkNode] - 1;
+            if (in_degreeArr[checkNode] === 0) {
+                nodeQueue.push(checkNode);
+            }
+        }
+        head++;
+    }
+    // console.log(`nodeQueue: ${nodeQueue}\nin_degreeArr: ${in_degreeArr}`);
+    if (classCount === numCourses) {
+        return true;
+    } else {
+        return false;
+    }
+};
 
 const test = [2, [[1, 0]]]; // expect true
 const test2 = [
@@ -110,3 +157,10 @@ console.log(canFinish(...test2)); // got false
 console.log(canFinish(...test3)); // got true
 console.log(canFinish(...test4)); // got false
 console.log(canFinish(...test5)); // got false
+/*
+console.log(canFinishOG(...test)); // got true
+console.log(canFinishOG(...test2)); // got false
+console.log(canFinishOG(...test3)); // got true
+console.log(canFinishOG(...test4)); // got false
+console.log(canFinishOG(...test5)); // got false
+*/
