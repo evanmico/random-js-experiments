@@ -21,6 +21,9 @@
         "@biomejs/biome": "2.3.11"
     },
     "dependencies": {
-        "jsdom": "^27.4.0"
+        "@digitak/esrun": "^3.2.26",
+        "@types/node": "^26.6.2",
+        "jsdom": "^27.4.0",
+        "typescript": "^7.0.2"
     }
 }
