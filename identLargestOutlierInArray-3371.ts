@@ -28,8 +28,21 @@ function getLargestOutlier(nums: number[]): number {
 			? num_freq_map.set(num, num_freq_map.get(num) + 1)
 			: num_freq_map.set(num, 1);
 	}
+	// set largest outlier to negative infinity as starting value
+	let largest_outlier = -Infinity;
+	for (const num of num_freq_map.keys()) {
+		const potential_outlier = total_sum - 2 * num;
 
-	return 1;
+		if (
+			num_freq_map.has(potential_outlier) &&
+			(potential_outlier !== num || num_freq_map.get(num) > 1)
+		) {
+			largest_outlier = Math.max(largest_outlier, potential_outlier);
+		}
+	}
+	return largest_outlier;
 }
 
-console.log(getLargestOutlier([-2, -1, -3, -6, 4]));
+console.log(getLargestOutlier([2, 3, 5, 10])); // Expects 10 return
+console.log(getLargestOutlier([-2, -1, -3, -6, 4])); // Expects 4 return
+console.log(getLargestOutlier([1, 1, 1, 1, 1, 5, 5])); // Expects 5 return
