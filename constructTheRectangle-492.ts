@@ -23,3 +23,7 @@ function constructRectangle(area: number): number[] {
 	// return l and width dimensions
 	return [l, w];
 }
+
+console.log(constructRectangle(4)); // expects [2,2] return
+console.log(constructRectangle(37)); // expects [37,1] return
+console.log(constructRectangle(122122)); // expects [427,286] return
